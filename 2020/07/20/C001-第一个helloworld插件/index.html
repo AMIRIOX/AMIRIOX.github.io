@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>C001-第一个helloworld插件 | amiriox&#39;s repository</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="开新坑了,VSCode: 扩展开发攻略系列主要介绍如何从零开始(不需要Js&#x2F;TS基础)开发一个VSCode插件 序: 写在前面的废话由于英语不好谷歌翻译后的官方文档 很迷惑,我就打算自己简单翻翻看 翻一下 顺便加上一些注解 需要注意的一点是 有些东西你别理解 先能复现再说 因为有些Js语法你没学肯定看不懂 放心,这个系列一定会咕咕咕的,估计十年都写不好 开始吧! (等帖子多了我会专门搞出来一个帖子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C001-第一个helloworld插件">
+<meta property="og:url" content="https://github.com/AMIRIOX/2020/07/20/C001-%E7%AC%AC%E4%B8%80%E4%B8%AAhelloworld%E6%8F%92%E4%BB%B6/index.html">
+<meta property="og:site_name" content="amiriox&#39;s repository">
+<meta property="og:description" content="开新坑了,VSCode: 扩展开发攻略系列主要介绍如何从零开始(不需要Js&#x2F;TS基础)开发一个VSCode插件 序: 写在前面的废话由于英语不好谷歌翻译后的官方文档 很迷惑,我就打算自己简单翻翻看 翻一下 顺便加上一些注解 需要注意的一点是 有些东西你别理解 先能复现再说 因为有些Js语法你没学肯定看不懂 放心,这个系列一定会咕咕咕的,估计十年都写不好 开始吧! (等帖子多了我会专门搞出来一个帖子">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlTHgI.gif">
+<meta property="og:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/Yl7K2R.png">
+<meta property="og:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlOvV0.png">
+<meta property="og:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlXFM9.png">
+<meta property="article:published_time" content="2020-07-20T04:36:03.946Z">
+<meta property="article:modified_time" content="2020-05-10T11:11:00.564Z">
+<meta property="article:author" content="Amiriox Flow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlTHgI.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="amiriox&#39;s repository" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">amiriox&#39;s repository</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">No sacrifice, no victory.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/AMIRIOX"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C001-第一个helloworld插件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/20/C001-%E7%AC%AC%E4%B8%80%E4%B8%AAhelloworld%E6%8F%92%E4%BB%B6/" class="article-date">
+  <time datetime="2020-07-20T04:36:03.946Z" itemprop="datePublished">2020-07-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C001-第一个helloworld插件
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开新坑了,<code>VSCode: 扩展开发攻略</code>系列主要介绍如何从零开始(<strong>不需要Js/TS基础</strong>)开发一个VSCode插件</p>
+<h1 id="序-写在前面的废话"><a href="#序-写在前面的废话" class="headerlink" title="序: 写在前面的废话"></a>序: 写在前面的废话</h1><p>由于<del>英语不好</del>谷歌翻译后的<a href="https://code.visualstudio.com/api" target="_blank" rel="noopener">官方文档</a> 很迷惑,我就打算自己简单翻翻看 翻一下 顺便加上一些注解</p>
+<p>需要注意的一点是 有些东西你别理解 先能复现再说 因为有些Js语法你没学肯定看不懂</p>
+<p>放心,这个系列一定会咕咕咕的,<del>估计十年都写不好</del></p>
+<p>开始吧! (等帖子多了我会专门搞出来一个帖子收集起来)</p>
+<h1 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h1><p>我们先了解下vscode插件开发的流程.<br>VSCode是Chromium内核,Electron+TypeScript编写的,<del>底层有些可以瞎改的CSS</del><br><strong>VSCode插件开发并不难,熟悉API之后很简单</strong><br>vscode插件开发时,重要的就是两个文件<code>package.json</code>和<code>extension.js</code>文件<br>一个用来描述有什么,一个用来告诉干什么</p>
+<blockquote>
+<p>注: 虽然我还是比较喜欢TypeScript,但这里我们还是使用Js演示 <del>毕竟TS还不火</del></p>
+</blockquote>
+<h1 id="环境-工欲善其事-必先利其器"><a href="#环境-工欲善其事-必先利其器" class="headerlink" title="环境: 工欲善其事,必先利其器"></a>环境: 工欲善其事,必先利其器</h1><h2 id="Node-Js-使用npm并换源-cnpm"><a href="#Node-Js-使用npm并换源-cnpm" class="headerlink" title="Node.Js : 使用npm并换源(cnpm)"></a>Node.Js : 使用npm并换源(cnpm)</h2><p>首先你需要一个node.js,下好了node.js才能使用<code>npm</code>命令<br>进入<a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">https://nodejs.org/zh-cn/</a>下载npm(推荐LTS版)<br>然后你可以换源(换源的目的是为了提升部署速度,<del>我知道你node.js下载了快半小时了</del>)<br>打开cmd,输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<p>这样,就可以换淘宝的镜像源了 <del>淘宝真是啥都有</del><br>然后下面的操作,就可以直接使用<code>cnpm</code>而不是<code>npm</code>了(速度明显提升)</p>
+<h2 id="官方VSCode插件生成环境"><a href="#官方VSCode插件生成环境" class="headerlink" title="官方VSCode插件生成环境"></a>官方VSCode插件生成环境</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install -g yo generator-code</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意,不要把<code>cnpm</code>打成<code>cnpm</code> ! ! ! 别笑,真就有人(比如我)犯了这样的低级错误</p>
+</blockquote>
+<p>然后新建一个目录,在cmd中使用<code>cd+新建的目录路径</code>进入这个目录<br>这个目录将会是你的插件的工作区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">d:</span><br><span class="line">cd D:\VSCode_Ext\AirxWorld\</span><br></pre></td></tr></table></figure>
+<p>然后执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yo code</span><br></pre></td></tr></table></figure>
+<p>下面的操作类似这样<br>中间有些耗时较长的地方我暂停了下GIF,不影响实际操作<br><img src="../../../../%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlTHgI.gif" alt="YlTHgI.gif"><br>然后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd name</span><br><span class="line">code .</span><br></pre></td></tr></table></figure>
+<p>(这里的name就是你<code>? What&#39;s the identifier of your extension? name</code>这里输入的名字)<br>然后cmd就可以关掉了,你发现你惊喜的进入了VSCode<br><img src="../../../../%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/Yl7K2R.png" alt="Yl7K2R.png"><br>(背景图片来自WLOP) (忽略我打开的那个json文件)</p>
+<h1 id="开始征程-第一个HelloWorld插件"><a href="#开始征程-第一个HelloWorld插件" class="headerlink" title="开始征程: 第一个HelloWorld插件"></a>开始征程: 第一个HelloWorld插件</h1><p>##熟悉文件</p>
+<p>左侧文件资源管理器已经能看到<code>package.json</code>和<code>extension.js</code>这两个文件了,qwq<br>这两个文件就是官方那个轮子生成的文件<br>我们先熟悉一下这个package.json文件</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"name"</span>: <span class="string">"name"</span>,             <span class="comment">//插件名</span></span><br><span class="line">	<span class="attr">"displayName"</span>: <span class="string">"name"</span>,      <span class="comment">//显示名</span></span><br><span class="line">	<span class="attr">"description"</span>: <span class="string">"描述 可以中文"</span>,  <span class="comment">//描述 对应你在命令行cmd输入的描述</span></span><br><span class="line">	<span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,         <span class="comment">//版本号  注: 以上在vscode插件市场可见</span></span><br><span class="line">	<span class="attr">"engines"</span>: &#123;</span><br><span class="line">		<span class="attr">"vscode"</span>: <span class="string">"^1.45.0"</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"categories"</span>: [</span><br><span class="line">		<span class="string">"Other"</span></span><br><span class="line">	],</span><br><span class="line">        <span class="comment">//扩展被激活时的事件(也就是干的事 有基础的同学可以理解为一个函数)</span></span><br><span class="line">	<span class="attr">"activationEvents"</span>: [</span><br><span class="line">		<span class="string">"onCommand:name.helloWorld"</span></span><br><span class="line">	],</span><br><span class="line">        <span class="comment">//入口文件</span></span><br><span class="line">	<span class="attr">"main"</span>: <span class="string">"./extension.js"</span>,</span><br><span class="line">        <span class="comment">//插件差不多所有的东西到要在这改,主要是一些命令的描述</span></span><br><span class="line">	<span class="attr">"contributes"</span>: &#123;</span><br><span class="line">		<span class="attr">"commands"</span>: [</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="attr">"command"</span>: <span class="string">"name.helloWorld"</span>,</span><br><span class="line">				<span class="attr">"title"</span>: <span class="string">"Hello World"</span></span><br><span class="line">			&#125;</span><br><span class="line">		]</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"scripts"</span>: &#123;</span><br><span class="line">		<span class="attr">"lint"</span>: <span class="string">"eslint ."</span>,</span><br><span class="line">		<span class="attr">"pretest"</span>: <span class="string">"npm run lint"</span>,</span><br><span class="line">		<span class="attr">"test"</span>: <span class="string">"node ./test/runTest.js"</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">		<span class="attr">"@types/vscode"</span>: <span class="string">"^1.45.0"</span>,</span><br><span class="line">		<span class="attr">"@types/glob"</span>: <span class="string">"^7.1.1"</span>,</span><br><span class="line">		<span class="attr">"@types/mocha"</span>: <span class="string">"^7.0.2"</span>,</span><br><span class="line">		<span class="attr">"@types/node"</span>: <span class="string">"^13.11.0"</span>,</span><br><span class="line">		<span class="attr">"eslint"</span>: <span class="string">"^6.8.0"</span>,</span><br><span class="line">		<span class="attr">"glob"</span>: <span class="string">"^7.1.6"</span>,</span><br><span class="line">		<span class="attr">"mocha"</span>: <span class="string">"^7.1.2"</span>,</span><br><span class="line">		<span class="attr">"typescript"</span>: <span class="string">"^3.8.3"</span>,</span><br><span class="line">		<span class="attr">"vscode-test"</span>: <span class="string">"^1.3.0"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没注释的地方可以忽略掉</p>
+<p>然后我们再熟悉下<code>extension.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; The module &#39;vscode&#39; contains the VS Code extensibility API</span><br><span class="line">&#x2F;&#x2F; Import the module and reference it with the alias vscode in your code below</span><br><span class="line">const vscode &#x3D; require(&#39;vscode&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; this method is called when your extension is activated</span><br><span class="line">&#x2F;&#x2F; your extension is activated the very first time the command is executed</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @param &#123;vscode.ExtensionContext&#125; context</span><br><span class="line"> *&#x2F;</span><br><span class="line">&#x2F;&#x2F;插件被激活时执行这个</span><br><span class="line">function activate(context) &#123;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; Use the console to output diagnostic information (console.log) and errors (console.error)</span><br><span class="line">	&#x2F;&#x2F; This line of code will only be executed once when your extension is activated</span><br><span class="line">	console.log(&#39;Congratulations, your extension &quot;name&quot; is now active!&#39;);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; The command has been defined in the package.json file</span><br><span class="line">	&#x2F;&#x2F; Now provide the implementation of the command with  registerCommand</span><br><span class="line">	&#x2F;&#x2F; The commandId parameter must match the command field in package.json</span><br><span class="line">	let disposable &#x3D; vscode.commands.registerCommand(&#39;name.helloWorld&#39;, function () &#123;</span><br><span class="line">		&#x2F;&#x2F; The code you place here will be executed every time your command is executed</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Display a message box to the user</span><br><span class="line">		vscode.window.showInformationMessage(&#39;Hello World from name!&#39;);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	context.subscriptions.push(disposable);</span><br><span class="line">&#125;</span><br><span class="line">exports.activate &#x3D; activate;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; this method is called when your extension is deactivated</span><br><span class="line">&#x2F;&#x2F;被释放时激活这个(上面那句英文也是这个意思,是自己生成的不关我事 ( ( (</span><br><span class="line">function deactivate() &#123;&#125;</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">	activate,</span><br><span class="line">	deactivate</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文件分析"><a href="#文件分析" class="headerlink" title="文件分析"></a>文件分析</h2><p>这两个自己生成的文件已经带有了输出hello world提示信息的功能,我们来分析下他是如何实现的<br><code>package.json</code>节选:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;contributes&quot;: &#123;</span><br><span class="line">		&quot;commands&quot;: [</span><br><span class="line">			&#123;</span><br><span class="line">				&quot;command&quot;: &quot;name.helloWorld&quot;,</span><br><span class="line">				&quot;title&quot;: &quot;Hello World&quot;</span><br><span class="line">			&#125;</span><br><span class="line">		]</span><br><span class="line">	&#125;,</span><br></pre></td></tr></table></figure>
+<p>commands的意思是”命令”,也就是说,以后要执行的命令都要在这<strong>注册</strong>(即进行描述)<br>了解json格式的同学也能发现commands<strong>其实是一个json数组</strong>,包含很多个json对象,不理解没关系<br>其中内部”command”是命令的名字,name.helloworld也就是这个命令的名字,可以理解为身份证,<br>比如以后要用到这个命令就要用这个名字叫他</p>
+<blockquote>
+<p>一个人呼喊另一个人: 张三!<br>人群中一堆叫张三的走了过来: 咋啦?<br>于是他喊: 身份证号是888888888888888888的人过来一下!<br>于是他要的张三就来了</p>
+</blockquote>
+<p>这里的888888888888888888就可以理解为name.helloworld</p>
+<blockquote>
+<p>注意,这里name不是固定的,而是我们这个项目的名称</p>
+</blockquote>
+<p>title的意思是标题,顾名思义,也就是标题<br>然后我们看看<code>extension.js</code>节选</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">activate</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> disposable = vscode.commands.registerCommand(<span class="string">'name.helloWorld'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		vscode.window.showInformationMessage(<span class="string">'Hello World from name!'</span>);</span><br><span class="line">	&#125;);</span><br><span class="line">	context.subscriptions.push(disposable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>function中文意思函数 可以理解为一长串清单 告诉某个对象要做什么<br>我们看代码里有这么一句context.subscriptions.push(disposable);</p>
+<blockquote>
+<p>context  n. 环境；上下文；来龙去脉</p>
+</blockquote>
+<p>前面不看 不要理解 直接从push开始</p>
+<blockquote>
+<p>push  vt. 推动，增加；对…施加压力，逼迫；按；说服; vi. 推进；增加；努力争取; n. 推，决心</p>
+</blockquote>
+<p>你可以形象一点理解: 把一个函数”扔”进一个地方 由别人去执行它<br>就好像</p>
+<blockquote>
+<p>你找了一张纸,写了一些任务,”给我端茶,倒水”,然后把这张纸”扔”到你家机器人的脑子里<br>然后你机器人帮你干活去了,依据是这张纸</p>
+</blockquote>
+<p><code>let disposable</code>什么意思呢?let”让,你可以理解为 让”disposable”(一个名字)这个东西出现(实际上是声明了一个变量)<br>后面<code>=</code>是赋值的意思,是把一个东西的值给另一个东西,比如,<code>a=3</code>就是把3值给a<br>既然是赋值,那为什么后面没有数字却有一串英文呢?<br>实际上可以这样理解,你有一个神奇的箱子,你往里放进去一个面团,他就会吐出一个面包 <del>不就是面包机</del><br>你可以把函数理解为这个神奇的箱子,参数理解为面团(你放进去的东西),<strong>返回值</strong>理解为面包(吐出来的东西)</p>
+<blockquote>
+<p>当然,有的函数不会”吐东西”,甚至也不接收东西</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vscode.commands.registerCommand(&#39;name.helloWorld&#39;, function () &#123;</span><br><span class="line">		vscode.window.showInformationMessage(&#39;Hello World from name!&#39;);</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
+<p>这段代码就是执行一个函数,函数名字(面包机的型号)<code>registerCommand</code>, 参数是’name.helloWorld’这个字符串和另一个函数(Js中字符串不是<code>&quot;</code>而是<code>&#39;</code>) 参数是什么?就是上面说的你放进面包机的东西<br>返回结果是<code>Disposable对象</code>,至于对象,你暂时理解成你对象好了,你对象是一个人这个类的个体<br><del>如果你没有对象的话,赶紧去找啊,还学什么学啊(大雾</del></p>
+<blockquote>
+<p>小提示: 实际上,`vscode.commands.registerCommand()就是一个API(Application Programming Interface,应用程序接口,也就是那个面包机的入口,用于注册命令,不理解没关系</p>
+</blockquote>
+<p>有时候,您可能看到这样的写法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">context.subscriptions.push(vscode.commands.registerCommand(&#39;name.helloWorld&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F;......</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>实际上这里它直接把值”扔”了进去,而没有用”纸”记下来<br>第二,它使用了() =&gt; {…}这样的写法,实际上叫一个<code>Lambda</code>表达式,暂时忽略即可<br>感兴趣可以自行百度/Bing/Google</p>
+<p>而函数内部呢,也是一个API,这个API<code>vscode.window.showInformationMessage()</code>用于输出一句调试信息<br>也很好理解,vscode就是vscode,window是窗口,show information message也就是显示 信息 消息<br>而括号中的’Hello World from name!’就是一个字符串,表示你要输出的信息,可以自己改</p>
+<p>这样就分析完了,如何测试一下是否可以呢?<br>按<code>f5</code>,在你键盘的第一行,不算esc键的第五个按键<br>可以看到它弹出来了一个新窗口<br>按下Ctrl+Shift+P,也就是打开VSCode的命令面板<br><img src="../../../../%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlOvV0.png" alt="YlOvV0.png"><br>(注意看上图上方)<br>输入hello,就能看到我们的helloworld命令了(title就是Hello World)<br>回车选择这个命令<br><img src="../../../../%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlXFM9.png" alt="YlXFM9.png"><br>(那个登录成功是我装的另一个插件<code>vscode-luogu</code>显示的,与本插件无关)<br>就能看到我们的输出信息了,即vscode.window.showInformationMessage()括号里的字符串(参数)</p>
+<p>这样,第一个Hello World就说完了,是不是很容易?<br>剩下的 以后再说吧 不会咕的 至少我也会把右键菜单命令和快捷键说完吧<br>掰掰~ 下期再见 ~</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/AMIRIOX/2020/07/20/C001-%E7%AC%AC%E4%B8%80%E4%B8%AAhelloworld%E6%8F%92%E4%BB%B6/" data-id="ckcu0q7qn0000csvl2wjdhwdw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/07/20/C002-%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%92%8C%E5%BF%AB%E6%8D%B7%E9%94%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C002-右键菜单和快捷键
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/07/20/Hello-World-in-hexo-blog/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World in hexo blog</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/20/C1/">C1</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/20/C002-%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%92%8C%E5%BF%AB%E6%8D%B7%E9%94%AE/">C002-右键菜单和快捷键</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/20/C001-%E7%AC%AC%E4%B8%80%E4%B8%AAhelloworld%E6%8F%92%E4%BB%B6/">C001-第一个helloworld插件</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/20/Hello-World-in-hexo-blog/">Hello World in hexo blog</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/20/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Amiriox Flow<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
