@@ -1,101 +1,83 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
   
+  <title>C001-第一个helloworld插件 | amiriox&#39;s repository | No sacrifice, no victory.</title>
 
   
-  <title>C001-第一个helloworld插件 | amiriox&#39;s repository</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="开新坑了,VSCode: 扩展开发攻略系列主要介绍如何从零开始(不需要Js&#x2F;TS基础)开发一个VSCode插件 序: 写在前面的废话由于英语不好谷歌翻译后的官方文档 很迷惑,我就打算自己简单翻翻看 翻一下 顺便加上一些注解 需要注意的一点是 有些东西你别理解 先能复现再说 因为有些Js语法你没学肯定看不懂 放心,这个系列一定会咕咕咕的,估计十年都写不好 开始吧! (等帖子多了我会专门搞出来一个帖子">
-<meta property="og:type" content="article">
-<meta property="og:title" content="C001-第一个helloworld插件">
-<meta property="og:url" content="https://github.com/AMIRIOX/2020/07/20/C001-%E7%AC%AC%E4%B8%80%E4%B8%AAhelloworld%E6%8F%92%E4%BB%B6/index.html">
-<meta property="og:site_name" content="amiriox&#39;s repository">
-<meta property="og:description" content="开新坑了,VSCode: 扩展开发攻略系列主要介绍如何从零开始(不需要Js&#x2F;TS基础)开发一个VSCode插件 序: 写在前面的废话由于英语不好谷歌翻译后的官方文档 很迷惑,我就打算自己简单翻翻看 翻一下 顺便加上一些注解 需要注意的一点是 有些东西你别理解 先能复现再说 因为有些Js语法你没学肯定看不懂 放心,这个系列一定会咕咕咕的,估计十年都写不好 开始吧! (等帖子多了我会专门搞出来一个帖子">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlTHgI.gif">
-<meta property="og:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/Yl7K2R.png">
-<meta property="og:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlOvV0.png">
-<meta property="og:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlXFM9.png">
-<meta property="article:published_time" content="2020-07-20T04:36:03.946Z">
-<meta property="article:modified_time" content="2020-05-10T11:11:00.564Z">
-<meta property="article:author" content="Amiriox Flow">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/AMIRIOX/%60warming%60%E5%8D%B7%E4%B8%80/%E4%B8%8A/2020_2/%E7%BC%96%E7%A8%8B%E6%97%A5%E8%AE%B0/images/YlTHgI.gif">
+  <meta name="author" content="Amiriox Flow">
   
-    <link rel="alternate" href="/atom.xml" title="amiriox&#39;s repository" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
 
+  
+  <meta name="description" content="amiriox&#39;s blog&#39;&#39;">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="C001-第一个helloworld插件"/>
+
+  <meta property="og:site_name" content="amiriox&#39;s repository"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="amiriox&#39;s repository" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
 <meta name="generator" content="Hexo 4.2.1"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">amiriox&#39;s repository</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">No sacrifice, no victory.</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/AMIRIOX"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-C001-第一个helloworld插件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/20/C001-%E7%AC%AC%E4%B8%80%E4%B8%AAhelloworld%E6%8F%92%E4%BB%B6/" class="article-date">
-  <time datetime="2020-07-20T04:36:03.946Z" itemprop="datePublished">2020-07-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      C001-第一个helloworld插件
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">amiriox&#39;s repository</a>
     </h1>
+    <p class="site-description">No sacrifice, no victory.</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>C001-第一个helloworld插件</span></h3>
+    
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2020/07/20/C001-第一个helloworld插件/" rel="bookmark">
+        <time class="entry-date published" datetime="2020-07-20T04:36:03.946Z">
+          2020-07-20
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
       
         <p>开新坑了,<code>VSCode: 扩展开发攻略</code>系列主要介绍如何从零开始(<strong>不需要Js/TS基础</strong>)开发一个VSCode插件</p>
 <h1 id="序-写在前面的废话"><a href="#序-写在前面的废话" class="headerlink" title="序: 写在前面的废话"></a>序: 写在前面的废话</h1><p>由于<del>英语不好</del>谷歌翻译后的<a href="https://code.visualstudio.com/api" target="_blank" rel="noopener">官方文档</a> 很迷惑,我就打算自己简单翻翻看 翻一下 顺便加上一些注解</p>
@@ -168,128 +150,43 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="https://github.com/AMIRIOX/2020/07/20/C001-%E7%AC%AC%E4%B8%80%E4%B8%AAhelloworld%E6%8F%92%E4%BB%B6/" data-id="ckcu0q7qn0000csvl2wjdhwdw" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2020/07/20/C002-%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%92%8C%E5%BF%AB%E6%8D%B7%E9%94%AE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          C002-右键菜单和快捷键
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/07/20/Hello-World-in-hexo-blog/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World in hexo blog</div>
-    </a>
-  
-</nav>
 
-  
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
 </article>
 
-</section>
-        
-          <aside id="sidebar">
   
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/07/20/C1/">C1</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/20/C002-%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%92%8C%E5%BF%AB%E6%8D%B7%E9%94%AE/">C002-右键菜单和快捷键</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/20/C001-%E7%AC%AC%E4%B8%80%E4%B8%AAhelloworld%E6%8F%92%E4%BB%B6/">C001-第一个helloworld插件</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/20/Hello-World-in-hexo-blog/">Hello World in hexo blog</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/20/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 Amiriox Flow<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2020 Amiriox Flow
+    
+  </p>
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
     
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
   </div>
+</div>
 </body>
 </html>
